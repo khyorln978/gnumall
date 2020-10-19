@@ -1,22 +1,46 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <beans:beans
-	xmlns="http://www.springframework.org/schema/mvc"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xmlns:beans="http://www.springframework.org/schema/beans"
-	xmlns:mvc="http://www.springframework.org/schema/mvc"
-	xmlns:context="http://www.springframework.org/schema/context"
-	xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd
+        xmlns="http://www.springframework.org/schema/mvc"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:beans="http://www.springframework.org/schema/beans"
+        xmlns:mvc="http://www.springframework.org/schema/mvc"
+        xmlns:context="http://www.springframework.org/schema/context"
+        xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd
         http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
         http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
-	<mvc:annotation-driven />
-	<resources mapping="/resources/**" location="/resources/" />
-	<beans:bean
-		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
-		<beans:property name="prefix" value="/WEB-INF/views/" />
-		<beans:property name="suffix" value=".jsp" />
-	</beans:bean>
-	<context:component-scan
-		base-package="gnumall" />
+    <mvc:annotation-driven/>
+    <resources mapping="/resources/**" location="/resources/"/>
+
+    <!-- thymeleaf View 설정 -->
+    <beans:bean id="templateResolver"
+                class="org.thymeleaf.spring5.templateresolver.SpringResourceTemplateResolver">
+        <beans:property name="prefix" value="/WEB-INF/views/"/>
+        <beans:property name="suffix" value=".html"/>
+        <beans:property name="templateMode" value="HTML5"/>
+        <beans:property name="characterEncoding" value="UTF-8"/>
+        <beans:property name="cacheable" value="false"/>
+    </beans:bean>
+
+    <!-- thymeleaf laytout을 쓰기위해 3rd Party 추가 -->
+    <beans:bean id="templateEngine" class="org.thymeleaf.spring5.SpringTemplateEngine">
+        <beans:property name="templateResolver" ref="templateResolver"/>
+        <beans:property name="additionalDialects">
+            <beans:set>
+                <beans:bean class="nz.net.ultraq.thymeleaf.LayoutDialect"/>
+            </beans:set>
+        </beans:property>
+    </beans:bean>
+
+    <!-- thymeleaf laytout ViewResolver 설정 -->
+    <beans:bean class="org.thymeleaf.spring5.view.ThymeleafViewResolver">
+        <beans:property name="templateEngine" ref="templateEngine"/>
+        <beans:property name="characterEncoding" value="UTF-8"/>
+        <beans:property name="order" value="1"/>
+    </beans:bean>
+
+
+    <context:component-scan
+            base-package="gnumall"/>
 
 </beans:beans>

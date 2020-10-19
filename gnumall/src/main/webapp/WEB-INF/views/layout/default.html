@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>GNU Mall</title>
+    <link href="/resources/css/bootstrap.css" rel="stylesheet">
+    <script type="text/javascript" src="/resources/vendor/jquery.slim.js"></script>
+    <script type="text/javascript" src="/resources/vendor/popper.min.js"></script>
+    <script type="text/javascript" src="/resources/js/bootstrap.min.js"></script>
+    <!-- import sample <script th:src="@{/abc/a.js}">
+    </script> => <script src="/abc/a.js"></script>
+    <link rel="stylesheet" th:href="@{/abc/a.css}"> => <link rel="stylesheet" href="/abc/a.css"> -->
+</head> <!-- body 태그 내부의 header 를 담당하는 부분이다. -->
+
+<header th:replace="structure/header :: header">
+
+</header> <!-- 아래 div가 컨트롤러에 의해 교체되는 content 영역이다. -->
+
+<div layout:fragment="content">
+
+
+</div> <!-- body 태그 내부의 footer 를 담당하는 부분이다. -->
+
+<footer th:replace="structure/footer :: footer">
+
+
+</footer>
+
+</html> <!-- /webapp/WEB-INF/views/structure/layout/type1.html -->
