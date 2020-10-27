@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:beans="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+    http://www.springframework.org/schema/beans/spring-beans.xsd
+    http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd">
+
+    <beans:property-placeholder location="classpath:properties/database.properties" />
+    <bean id="dataSource" class="org.apache.commons.dbcp2.BasicDataSource" destroy-method="close">
+        <property name="driverClassName" value="${driver}" />
+        <property name="url" value="${url}" />
+        <property name="username" value="${username}" />
+        <property name="password" value="${password}" />
+        <property name="maxTotal" value="${maxActCon}" />
+        <property name="minIdle" value="${minIdleCon}" />
+        <property name="maxIdle" value="${maxIdleCon}" />
+        <property name="maxWaitMillis" value="${maxWaitTime}" />
+        <property name="validationQuery" value="${validationQuery}" />
+        <property name="testOnBorrow" value="true" /><!-- 커넥션 풀에서 커넥션을 가져올때 커넥션이 유효한지 검사한다 -->
+        <property name="testOnReturn" value="true" /><!-- 커넥션 풀에 커넥션을 반환할때 커넥션이 유효한지 검사한다 -->
+        <property name="testWhileIdle" value="true" /><!-- 장시간 DB 작업이 없을 경우에도 지속적으로 validationQuery를 전송하여 연결이끊기는 것을 방지한다 -->
+        <property name="timeBetweenEvictionRunsMillis" value="1800000" />
+    </bean>
+
+    <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="dataSource" />
+    </bean>
+
+    <!-- enable transaction demarcation with annotations -->
+    <tx:annotation-driven transaction-manager="transactionManager"/>
+
+    <!-- myBatis setting -->
+    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <property name="dataSource" ref="dataSource" />
+        <property name="configLocation" value="classpath:config/mybatis.xml" />
+        <property name="mapperLocations" value="classpath*:mapper/**/*.xml" />
+    </bean>
+
+    <bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate">
+        <constructor-arg index="0" ref="sqlSessionFactory" />
+    </bean>
+
+    <!-- use mapper interface ... -->
+    <bean id="mapper" class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <property name="basePackage" value="gnumall" />
+        <!-- property name="sqlSessionFactoryBeanName" value="sqlSessionFactory" /-->
+        <property name="sqlSessionTemplateBeanName" value="sqlSession" />
+    </bean>
+
+
+
+
+
+
+
+</beans>
