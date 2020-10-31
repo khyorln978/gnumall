@@ -4,12 +4,15 @@
 
 <configuration>
 
-    <typeAliases>
-        <typeAlias alias="dMap" type="gnumall.common.util.DataMap" />
-        <typeAlias alias="cMap" type="gnumall.common.util.CamelMap" />
-    </typeAliases>
+	<settings>
+		<setting name="callSettersOnNulls" value="true" />
+	</settings>
+	<typeAliases>
+		<typeAlias alias="dMap" type="gnumall.common.util.DataMap" />
+		<typeAlias alias="cMap" type="gnumall.common.util.CamelMap" />
+	</typeAliases>
 
-    <typeHandlers>
-    </typeHandlers>
+	<typeHandlers>
+	</typeHandlers>
 
 </configuration>
