@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="gnumall.store.mapper.StoreMapper">
+
+    <select id="showProduct" resultType="cMap">
+        SELECT *
+        FROM product
+        WHERE 1 = 1
+
+    </select>
+
+    <select id="getItemCategory" resultType="cMap">
+        SELECT p_category
+        FROM product
+        WHERE 1 = 1
+        AND p_name = '상품 1'
+    </select>
+
+</mapper>
